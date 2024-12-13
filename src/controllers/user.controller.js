@@ -1,6 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
-import { User } from "../models/user.model.js";
+import { User } from "../model/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
@@ -25,9 +25,12 @@ const generateAccessAndRefereshTokens = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { fullName, email, username, password } = req.body;
+  console.log(req.body);
+  const { fullName, email, username, password, phone } = req.body;
 
-  if ([, email, username, password].some((field) => field?.trim() === "")) {
+  if (
+    [phone, email, username, password].some((field) => field?.trim() === "")
+  ) {
     throw new ApiError(400, "All fields are required");
   }
 
@@ -44,7 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     fullName,
     avatar: avatar?.url,
-
+    phone,
     email,
     password,
     username: username.toLowerCase(),
@@ -64,6 +67,7 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
+  console.log(req.body);
   const { email, username, password } = req.body;
   console.log(email);
 
