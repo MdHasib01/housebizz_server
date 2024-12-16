@@ -16,10 +16,12 @@ app.use(cookieParser());
 
 // import routes
 import userRouter from "./routes/usr.routes.js";
+import propertyRouter from "./routes/property.routes.js";
 
 // routes
 app.use("/api/v1/healthcheck", (req, res) =>
   res.status(200).json({ status: "OK" })
 );
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/properties", propertyRouter);
 export default app;
