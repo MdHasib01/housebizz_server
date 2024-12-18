@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { addProperty } from "../controllers/property.controller.js";
+import {
+  addProperty,
+  getAllProperties,
+} from "../controllers/property.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -15,5 +18,7 @@ router.route("/listProperty").post(
   ]),
   addProperty
 );
+
+router.route("/getAllProperties").get(getAllProperties);
 
 export default router;
