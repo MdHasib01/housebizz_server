@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   addProperty,
   getAllProperties,
+  getPropertyById,
 } from "../controllers/property.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -19,6 +20,7 @@ router.route("/listProperty").post(
   addProperty
 );
 
-router.route("/getAllProperties").get(getAllProperties);
+router.route("/").get(getAllProperties);
+router.route("/:propertyId").get(getPropertyById);
 
 export default router;
