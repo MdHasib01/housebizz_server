@@ -155,7 +155,7 @@ const getPropertyById = asyncHandler(async (req, res) => {
     {
       $unwind: "$ownerDetails",
     },
-  ]);
+  ]).then((result) => result[0]);
 
   if (!property) {
     throw new ApiError(404, "Property not found");
