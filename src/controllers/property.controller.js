@@ -61,7 +61,7 @@ const addProperty = asyncHandler(async (req, res) => {
 });
 
 const getAllProperties = asyncHandler(async (req, res) => {
-  const { page = 1, limit = 10, query, sortBy, sortType } = req.query;
+  const { query, sortBy, sortType } = req.query;
   const pipeline = [];
 
   if (query) {
@@ -70,7 +70,7 @@ const getAllProperties = asyncHandler(async (req, res) => {
         index: "search-property",
         text: {
           query: query,
-          path: ["title", "description"], //search only on title, desc
+          path: ["title", "description"],
         },
       },
     });
@@ -108,18 +108,11 @@ const getAllProperties = asyncHandler(async (req, res) => {
     }
   );
 
-  const propertyAggregate = Property.aggregate(pipeline);
+  const properties = await Property.aggregate(pipeline);
 
-  const options = {
-    page: parseInt(page, 10),
-    limit: parseInt(limit, 10),
-  };
-
-  const property = await Property.aggregatePaginate(propertyAggregate, options);
-  // const all = await Property.find();
   return res
     .status(200)
-    .json(new ApiResponse(200, property, "Property fetched successfully"));
+    .json(new ApiResponse(200, properties, "Properties fetched successfully"));
 });
 
 //get product by id
@@ -166,4 +159,22 @@ const getPropertyById = asyncHandler(async (req, res) => {
   }
 });
 
-export { addProperty, getAllProperties, getPropertyById };
+//delete property
+const deleteProperty = asyncHandler(async (req, res) => {
+  const { propertyId } = req.params;
+
+  if (!isValidObjectId(propertyId)) {
+    throw new ApiError(400, "Invalid propertyId");
+  }
+
+  const property = await Property.findByIdAndDelete(propertyId);
+
+  if (!property) {
+    throw new ApiError(404, "Property not found");
+  } else {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Property deleted successfully"));
+  }
+});
+export { addProperty, getAllProperties, getPropertyById, deleteProperty };

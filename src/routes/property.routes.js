@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addProperty,
+  deleteProperty,
   getAllProperties,
   getPropertyById,
 } from "../controllers/property.controller.js";
@@ -22,5 +23,6 @@ router.route("/listProperty").post(
 
 router.route("/").get(getAllProperties);
 router.route("/:propertyId").get(getPropertyById);
+router.route("/:propertyId").delete(deleteProperty);
 
 export default router;
