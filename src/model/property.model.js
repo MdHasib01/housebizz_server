@@ -15,11 +15,11 @@ const propertySchema = new Schema(
     bathrooms: { type: Number },
     garage: { type: Number },
     yearBuilt: { type: Number },
-    appartmentType: {
+    apartmentType: {
       type: String,
       enum: ["house", "shop", "office", "apartment", "villa"],
     },
-    porertyStatus: { type: String, enum: ["rent", "sale", "sold"] },
+    propertyStatus: { type: String, enum: ["rent", "sale", "sold"] },
     owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   {
