@@ -177,4 +177,39 @@ const deleteProperty = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, {}, "Property deleted successfully"));
   }
 });
-export { addProperty, getAllProperties, getPropertyById, deleteProperty };
+
+//edit property
+const editProperty = asyncHandler(async (req, res) => {
+  const { propertyId } = req.params;
+
+  if (!isValidObjectId(propertyId)) {
+    throw new ApiError(400, "Invalid propertyId");
+  }
+
+  const imageLocalPath = req?.files?.image?.[0]?.path || null;
+
+  if (imageLocalPath) {
+    const propertyImage = await uploadOnCloudinary(imageLocalPath);
+    req.body.image = propertyImage.url;
+  }
+
+  const property = await Property.findByIdAndUpdate(propertyId, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  console.log(req.body);
+  if (!property) {
+    throw new ApiError(404, "Property not found");
+  } else {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, property, "Property updated successfully"));
+  }
+});
+export {
+  addProperty,
+  getAllProperties,
+  getPropertyById,
+  deleteProperty,
+  editProperty,
+};
