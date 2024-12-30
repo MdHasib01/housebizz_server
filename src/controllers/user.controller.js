@@ -280,6 +280,13 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "Avatar image updated successfully"));
 });
 
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().select("-password");
+  return res
+    .status(200)
+    .json(new ApiResponse(200, users, "Users fetched successfully"));
+});
+
 export {
   registerUser,
   loginUser,
@@ -289,4 +296,5 @@ export {
   getCurrentUser,
   updateAccountDetails,
   updateUserAvatar,
+  getAllUsers,
 };
