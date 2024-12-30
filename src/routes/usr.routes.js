@@ -6,6 +6,7 @@ import {
   refreshAccessToken,
   changeCurrentPassword,
   getCurrentUser,
+  getAllUsers,
   updateUserAvatar,
   updateAccountDetails,
 } from "../controllers/user.controller.js";
@@ -31,7 +32,7 @@ router.route("/register").post(
 router.route("/login").post(loginUser);
 
 //secured routes
-router.route("/").get(verifyJWT, logoutUser);
+router.route("/").get(verifyJWT, getAllUsers);
 router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/refresh-token").post(refreshAccessToken);
 router.route("/change-password").post(verifyJWT, changeCurrentPassword);
