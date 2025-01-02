@@ -281,7 +281,9 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
 });
 
 const getAllUsers = asyncHandler(async (req, res) => {
-  const users = await User.find().select("-password");
+  const { role } = req.query;
+  const query = role ? { role } : {};
+  const users = await User.find(query).select("-password");
   return res
     .status(200)
     .json(new ApiResponse(200, users, "Users fetched successfully"));
