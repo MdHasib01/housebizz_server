@@ -95,7 +95,7 @@ const getAllProperties = asyncHandler(async (req, res) => {
   if (status && status.trim()) {
     pipeline.push({
       $match: {
-        propertyStatus: status.trim(),
+        porertyStatus: status.trim(),
       },
     });
   }
