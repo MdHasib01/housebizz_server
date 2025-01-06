@@ -61,7 +61,7 @@ const addProperty = asyncHandler(async (req, res) => {
 });
 
 const getAllProperties = asyncHandler(async (req, res) => {
-  const { name, city, divission, sortBy, sortType } = req.query;
+  const { name, city, status, type, divission, sortBy, sortType } = req.query;
   const pipeline = [];
 
   if (name) {
@@ -88,6 +88,22 @@ const getAllProperties = asyncHandler(async (req, res) => {
     pipeline.push({
       $match: {
         divission: divission.trim(),
+      },
+    });
+  }
+  // filter with status
+  if (status && status.trim()) {
+    pipeline.push({
+      $match: {
+        propertyStatus: status.trim(),
+      },
+    });
+  }
+  // filter with apartmentType
+  if (type && type.trim()) {
+    pipeline.push({
+      $match: {
+        apartmentType: type.trim(),
       },
     });
   }
