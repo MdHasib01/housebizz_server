@@ -61,21 +61,36 @@ const addProperty = asyncHandler(async (req, res) => {
 });
 
 const getAllProperties = asyncHandler(async (req, res) => {
-  const { query, sortBy, sortType } = req.query;
+  const { name, city, divission, sortBy, sortType } = req.query;
   const pipeline = [];
 
-  if (query) {
+  if (name) {
     pipeline.push({
       $search: {
         index: "search-property",
         text: {
-          query: query,
+          query: name,
           path: ["title", "description"],
         },
       },
     });
   }
-
+  // Filter with city
+  if (city && city.trim()) {
+    pipeline.push({
+      $match: {
+        city: city.trim(),
+      },
+    });
+  }
+  // filter with divission
+  if (divission && divission.trim()) {
+    pipeline.push({
+      $match: {
+        divission: divission.trim(),
+      },
+    });
+  }
   if (sortBy && sortType) {
     pipeline.push({
       $sort: {
