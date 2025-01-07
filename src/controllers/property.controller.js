@@ -103,7 +103,7 @@ const getAllProperties = asyncHandler(async (req, res) => {
   if (type && type.trim()) {
     pipeline.push({
       $match: {
-        apartmentType: type.trim(),
+        appartmentType: type.trim(),
       },
     });
   }
