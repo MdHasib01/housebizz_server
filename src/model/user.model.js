@@ -56,4 +56,18 @@ userSchema.methods.generateRefreshToken = function () {
   );
 };
 
+userSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    try {
+      const Agent = mongoose.model("Agent");
+      await Agent.deleteOne({ userID: this._id });
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export const User = mongoose.model("User", userSchema);

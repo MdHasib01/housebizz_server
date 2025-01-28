@@ -289,6 +289,20 @@ const getAllUsers = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, users, "Users fetched successfully"));
 });
 
+const deleteUser = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+  // Deleteone
+  await user.deleteOne();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "User deleted successfully"));
+});
 export {
   registerUser,
   loginUser,
@@ -299,4 +313,5 @@ export {
   updateAccountDetails,
   updateUserAvatar,
   getAllUsers,
+  deleteUser,
 };
