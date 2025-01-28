@@ -57,7 +57,7 @@ const addProperty = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(200, createProperty, "Property listed Successfully"));
+    .json(new ApiResponse(201, createProperty, "Property listed Successfully"));
 });
 
 const getAllProperties = asyncHandler(async (req, res) => {

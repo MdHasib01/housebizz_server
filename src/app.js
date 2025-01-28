@@ -17,6 +17,7 @@ app.use(cookieParser());
 // import routes
 import userRouter from "./routes/usr.routes.js";
 import propertyRouter from "./routes/property.routes.js";
+import agentRouter from "./routes/agent.routes.js";
 import errorHandler from "./middlewares/errorHandler.middleware.js";
 
 // routes
@@ -25,6 +26,8 @@ app.use("/api/v1/healthcheck", (req, res) =>
 );
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/properties", propertyRouter);
+//agent routes
+app.use("/api/v1/agent", agentRouter);
 
 app.use(errorHandler);
 export default app;
