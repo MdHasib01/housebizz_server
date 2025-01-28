@@ -1,4 +1,5 @@
 import { Agent } from "../model/agent.model.js";
+import { User } from "../model/user.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const applyForAgent = asyncHandler(async (req, res) => {
@@ -46,4 +47,26 @@ const getAgents = asyncHandler(async (req, res) => {
   return res.status(200).json({ message: "Agents", data: agents });
 });
 
-export { applyForAgent, getAgents };
+const verifyAgent = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { verificationStatus } = req.body;
+
+  const agent = await Agent.findById(id);
+
+  const updateAgent = await Agent.findByIdAndUpdate(
+    id,
+    { verificationStatus },
+    { new: true }
+  );
+  if (verificationStatus === "verified") {
+    await User.findByIdAndUpdate(agent.userID, { role: "agent" });
+  } else if (
+    verificationStatus === "rejected" ||
+    verificationStatus === "pending"
+  ) {
+    await User.findByIdAndUpdate(agent.userID, { role: "user" });
+  }
+
+  return res.status(200).json({ message: "Agent status changed", data: agent });
+});
+export { applyForAgent, getAgents, verifyAgent };

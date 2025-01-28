@@ -31,23 +31,4 @@ const agentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-agentSchema.pre("save", async function (next) {
-  if (this.isModified("verificationStatus")) {
-    try {
-      const User = mongoose.model("User");
-
-      if (this.verificationStatus === "verified") {
-        await User.findByIdAndUpdate(this.userId, { role: "agent" });
-      } else if (
-        this.verificationStatus === "rejected" ||
-        this.verificationStatus === "pending"
-      ) {
-        await User.findByIdAndUpdate(this.userId, { role: "user" });
-      }
-    } catch (error) {
-      return next(error);
-    }
-  }
-  next();
-});
 export const Agent = mongoose.model("Agent", agentSchema);
