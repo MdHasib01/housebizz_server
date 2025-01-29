@@ -47,6 +47,15 @@ const getAgents = asyncHandler(async (req, res) => {
   return res.status(200).json({ message: "Agents", data: agents });
 });
 
+const getAgent = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const agent = await Agent.findById(id).populate(
+    "userID",
+    "fullName email phone avatar username"
+  );
+  return res.status(200).json({ message: "Agent", data: agent });
+});
+
 const verifyAgent = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { verificationStatus } = req.body;
@@ -69,4 +78,4 @@ const verifyAgent = asyncHandler(async (req, res) => {
 
   return res.status(200).json({ message: "Agent status changed", data: agent });
 });
-export { applyForAgent, getAgents, verifyAgent };
+export { applyForAgent, getAgents, verifyAgent, getAgent };
