@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Agent } from "../model/agent.model.js";
 import { User } from "../model/user.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -76,13 +77,12 @@ const verifyAgent = asyncHandler(async (req, res) => {
 
   return res.status(200).json({ message: "Agent status changed", data: agent });
 });
-
+const ObjectId = mongoose.Types.ObjectId;
 const isApplied = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const agent = await Agent.findOne({
-    "userID._id": id,
+    userID: new ObjectId(id),
   });
-  res.status(200).json({ message: "Apply for Agent", data: agent });
   if (!agent) {
     return res.status(200).json({ message: "Apply for Agent", data: false });
   }
