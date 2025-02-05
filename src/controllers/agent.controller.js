@@ -82,7 +82,7 @@ const isApplied = asyncHandler(async (req, res) => {
   const agent = await Agent.findOne({
     "userID._id": id,
   });
-
+  res.status(200).json({ message: "Apply for Agent", data: agent });
   if (!agent) {
     return res.status(200).json({ message: "Apply for Agent", data: false });
   }
