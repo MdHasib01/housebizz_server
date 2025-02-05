@@ -17,7 +17,7 @@ const agentSchema = new mongoose.Schema(
     officeAddress: {
       type: String,
       required: true,
-    }
+    },
     verificationStatus: {
       type: String,
       default: "pending",
