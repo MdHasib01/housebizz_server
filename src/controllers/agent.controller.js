@@ -3,7 +3,7 @@ import { User } from "../model/user.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const applyForAgent = asyncHandler(async (req, res) => {
-  const { userID, licenseNumber, yearsOfExperience, bio, officeAddress } =
+  const { userID, licenseNumber, yearsOfExperience, officeAddress } =
     req.body;
   if (!userID) {
     return res.status(400).json({ message: "User ID is required" });
@@ -20,8 +20,7 @@ const applyForAgent = asyncHandler(async (req, res) => {
   const agent = await Agent.create({
     userID,
     licenseNumber,
-    yearsOfExperience,
-    bio,
+    yearsOfExperience
     officeAddress,
   });
 
