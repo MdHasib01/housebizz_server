@@ -76,4 +76,14 @@ const verifyAgent = asyncHandler(async (req, res) => {
 
   return res.status(200).json({ message: "Agent status changed", data: agent });
 });
-export { applyForAgent, getAgents, verifyAgent, getAgent };
+
+const isApplied = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const agent = await Agent.findById(id);
+  if (agent.verificationStatus === "pending") {
+    return res.status(200).json({ message: "Agent", data: true });
+  } else {
+    return res.status(200).json({ message: "Agent", data: false });
+  }
+});
+export { applyForAgent, getAgents, verifyAgent, getAgent, isApplied };

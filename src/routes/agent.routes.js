@@ -12,4 +12,5 @@ router.route("/").post(applyForAgent);
 router.route("/").get(getAgents);
 router.route("/:id").get(getAgent);
 router.route("/changeStatus/:id").post(verifyAgent);
+router.route("/isApplied/:id").get(verifyAgent);
 export default router;
