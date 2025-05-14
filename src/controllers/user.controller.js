@@ -23,6 +23,29 @@ const generateAccessAndRefereshTokens = async (userId) => {
     );
   }
 };
+const verifyToken = asyncHandler(async (req, res) => {
+  const { token } = req.body;
+
+  if (!token) {
+    throw new ApiError(400, "Token is required");
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    const user = await User.findById(decodedToken?._id);
+
+    if (!user) {
+      throw new ApiError(401, "Invalid token");
+    }
+
+    return res.status(200).json(new ApiResponse(200, user, "Token is valid"));
+  } catch (error) {
+    throw new ApiError(401, error?.message || "Invalid token");
+  }
+});
+
+export { verifyToken };
 
 const registerUser = asyncHandler(async (req, res) => {
   console.log(req.body);
