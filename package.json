@@ -2,6 +2,9 @@
   "name": "housebizz_server",
   "version": "2.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "build": "rimraf dist && npx tsc",
     "start": "npm run build && node dist/index.js",
@@ -20,34 +23,22 @@
   "homepage": "https://github.com/MdHasib01/housebizz_server#readme",
   "description": "",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.806.0",
-    "@aws-sdk/lib-storage": "^3.806.0",
-    "@prisma/client": "^6.7.0",
-    "@terraformer/wkt": "^2.2.1",
-    "@types/cors": "^2.8.18",
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/morgan": "^1.9.9",
-    "@types/multer": "^1.4.12",
-    "@types/node": "^22.15.17",
-    "@types/terraformer__wkt": "^2.0.3",
-    "@types/uuid": "^10.0.0",
-    "axios": "^1.9.0",
-    "body-parser": "^2.2.0",
+    "@ngrok/ngrok": "^1.4.1",
+    "aws-sdk": "^2.1692.0",
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.5.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "helmet": "^8.1.0",
-    "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.2",
-    "prisma": "^6.7.0",
-    "typescript": "^5.8.3",
-    "uuid": "^11.1.0"
-  },
-  "devDependencies": {
-    "concurrently": "^9.1.2",
-    "nodemon": "^3.1.10",
-    "rimraf": "^6.0.1",
-    "shx": "^0.4.0",
-    "ts-node": "^10.9.2"
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "i": "^0.3.7",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.0",
+    "mongoose-aggregate-paginate-v2": "^1.1.2",
+    "mpm": "^0.0.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1",
+    "nodemon": "^3.1.9"
   }
 }
