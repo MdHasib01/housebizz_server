@@ -10,7 +10,7 @@ const userSchema = new Schema(
     phone: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     avatar: {
-      type: String, // cloudinary url
+      type: String, // s3 bucket url
     },
     refreshToken: { type: String },
     role: { type: String, default: "user" },
