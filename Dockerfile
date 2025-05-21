@@ -1,22 +1,15 @@
-FROM node:22 as builder
+FROM node:22
 
-RUN npm install -g npm@latest
-WORKDIR /build
+WORKDIR /app
 
 COPY package*.json ./
+
 RUN npm install
 
 COPY . .
 
+RUN npm install -g dotenv-cli
 
-# Stage 2
+EXPOSE 8080
 
-FROM node:22 as runner
-
-WORKDIR /app
-
-COPY --from=builder build/package*.json .
-COPY --from=builder build/node_modules node_modules/
-COPY --from=builder build/. .
-
-CMD ["npm", "start"]
+CMD ["dotenv", "-e", ".env", "--", "node", "src/index.js"]
