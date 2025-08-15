@@ -1,15 +1,19 @@
-FROM node:22
+FROM node:22-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci --only=production
 
 COPY . .
 
-RUN npm install -g dotenv-cli
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+RUN chown -R nextjs:nodejs /app
+USER nextjs
 
 EXPOSE 8080
 
-CMD ["dotenv", "-e", ".env", "--", "node", "src/index.js"]
+CMD ["node", "src/index.js"]
